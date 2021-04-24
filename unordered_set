@@ -1,0 +1,70 @@
+#include <unordered_set>
+#include <list> 
+#include <iterator> 
+class unorderedSet {
+private:
+  
+public:
+    //int buckets=10177;
+    int buckets;
+    int Size;
+   // int *table[];
+   list<int> *table;
+    
+    unorderedSet() {
+        //a TA suggested we should make th ebucket size a ;arger prime number
+    this->buckets=10177;
+    table= new list<int>[buckets];
+        this->Size=0;
+        //unorderedSet *table= new table[10177];
+    }
+    int hashFunction(int val){
+          int hash=val % buckets;
+        return hash;
+    }
+
+       bool has(int val) {
+      int index=hashFunction(val);  
+         for (auto itr = table[index].begin(); itr !=table[index].end(); ++itr)
+     {
+         if(*itr==val){
+          return true;
+         }
+     }
+        return false;
+    }
+    
+    void insert(int val) {
+        if(!has(val)){
+    int index=hashFunction(val);
+    table[index].push_back(val);
+            Size++;
+        }
+  // int index=hashFunction(val);
+   // table[index].push_back(val);
+        //you need to handle duplicate insertions and track size
+    }
+//I used this site to resolve my remove function errors: https://www.geeksforgeeks.org/c-program-hashing-chaining/
+    void rem(int val) {
+    int index=hashFunction(val);
+        auto itr = table[index].begin();
+     for (; itr !=table[index].end(); ++itr)
+     {
+         if(*itr==val){
+         // table[index].erase(itr);
+             // table[index].erase(itr);
+             break;
+             
+         }
+     }
+     if (itr != table[index].end()){ 
+    table[index].erase(itr);  
+           Size--;
+       }
+    }
+
+    int size() {
+        
+        return Size;
+    }
+};
